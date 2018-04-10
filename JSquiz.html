@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset = 'UTF-8'>
+<meta http-equiv="X-US-Compatible"  content="IE=edge">
+<meta name = 'viewport' content= 'width = device-width, initial-scale = 1'>
+
+	<title></title>
+
+<!-- Bootstrap CDN-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+
+
+.jumbotron{
+	margin-top: 2rem;
+}
+
+.btn-lg{
+	margin-top: 1rem;
+}
+form{
+	border-style: dashed ;
+}
+
+</style>
+</head>
+<body>
+
+<div class='container-fluid'>
+	
+	<div class='row'>
+		<div class=' col-sm-6 text-center'>
+			
+			<input type='button' value='Start Quiz' id='startQuizButton' class=' btn btn-lg btn-success' autofocus>
+		
+		</div>
+		<div class=' col-sm-6 text-center'>
+
+			<h3><p id='displayScore'></p></h3>
+			
+			<h3><p id='displayProgress'></p></h3>
+		
+		</div>
+	</div>
+	
+	
+<!-- question Field -->
+	<div class='row'>
+		<div class='col-sm-12 jumbotron bg-warning text-center'>
+		
+			<h3 id='quiz' class=''></h3>
+			
+		
+		</div>
+	</div>
+
+<!-- answer field below -->
+	<div class='row'>
+		<div class='col-sm-12 text-center'>
+		
+			<form >
+				
+				<h3>Answer:</h3>
+				<input type='radio' name = 'answers' id='a' value='a'>A: <span id='answerA'></span><br>
+				<input type='radio' name = 'answers' id='b' value='b'>B: <span id='answerB'></span><br>
+				<input type='radio' name = 'answers' id='c' value='c'>C: <span id='answerC'></span><br>
+				<input type='radio' name = 'answers' id='d' value='d'>D: <span id='answerD'></span><br>
+				
+			<br>		
+			</form>
+			
+
+
+			
+			<input type='button' value='submit' id='submitButton' class='btn btn-primary btn-lg'>
+
+		</div>
+	</div>	
+
+
+</div><!-- end of container -->
+
+<!-- bootsrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- end bootstrap JS -->
+
+<script>
+//store question objects to be asked
+var questionArr = [];
+//store question objects that have been asked and shifted off questionArr
+var usedQuestionArr = [];
+//questions for question array and push action
+var question1 = new Question('What is the sun?', {a:"a star", b:" a planet", c:"a rock", d:"hydrogen and helium fusing together"}, 'a');
+questionArr.push(question1);
+
+var question2 = new Question('What is the process by which the sun generates energy?', {a:"a star", b:" a planet", c:"a rock", d:"hydrogen and helium fusing together"}, 'd');
+questionArr.push(question2);
+
+var question3 = new Question('Not paper, not scissor, but.....', {a:"a star", b:" a planet", c:"a rock", d:"hydrogen and helium fusing together"}, 'c');
+questionArr.push(question3);
+
+var question4 = new Question('Jupiter is the largest _______ in the solar system', {a:"a star", b:" a planet", c:"a rock", d:"hydrogen and helium fusing together"}, 'b');
+questionArr.push(question4);
+
+var numQuestions = questionArr.length;
+
+//user score
+var numRightAnswers=0;
+var score;
+
+var displayScore = document.querySelector('#displayScore');
+var displayProgress = document.querySelector('#displayProgress');
+
+const quiz = document.querySelector('#quiz');
+const answerA = document.querySelector('#answerA');
+const answerB = document.querySelector('#answerB');
+const answerC = document.querySelector('#answerC');
+const answerD = document.querySelector('#answerD');
+//radio button handles
+const a = document.querySelector('#a');
+const b = document.querySelector('#b');
+const c = document.querySelector('#c');
+const d = document.querySelector('#d');
+
+
+//constructor to make questions
+function Question(question, answerObj, answer){
+	this.question = question;
+	this.answerObj = answerObj;
+	this.answer = answer;
+}
+
+//populate question field and radio buttons with question and answer from first element in question array
+function questionTime(){
+	if (questionArr.length>0){
+		quiz.textContent = questionArr[0].question;
+		answerA.textContent = questionArr[0].answerObj.a;
+		answerB.textContent = questionArr[0].answerObj.b;
+		answerC.textContent = questionArr[0].answerObj.c;
+		answerD.textContent = questionArr[0].answerObj.d;
+	}else{
+		//enter game over control here
+	}
+}
+
+
+
+//function uses confirm box which then 
+var confirmAnswerFunction = function(){
+	var c=confirm("CORRECT! \n click OK to continue");
+		if(c==true){
+			//adjust score here
+		}
+		else{
+			confirmAnswerFunction();
+		}
+}
+
+//function to shift first entry of questionArr
+//use after answering question to proceed through question array
+function clearQuestion(){
+	var radios = document.getElementsByName('answers');
+	
+	quiz.textContent = '';
+	answerA.textContent = '';
+	answerB.textContent = '';
+	answerC.textContent = '';
+	answerD.textContent = '';
+	
+	questionArr.shift();
+	
+	for (var i=0; i<radios.length; i++){
+		radios[i].checked=false;
+	}
+}
+
+//change score 
+function adjustScore(){
+	numRightAnswers++;
+	score = 100*(numRightAnswers / numQuestions);
+	return score;
+
+}
+
+//loop through radio buttons compare checked values with answer value from question obj
+function checkAnswer(){
+	var radios = document.getElementsByName('answers');
+		
+		for (var i = 0, length = radios.length; i < length; i++){
+ 			if (radios[i].checked){
+				if(radios[i].value == questionArr[0].answer){
+					confirmAnswerFunction();
+					displayScore.textContent = ('Score: '+adjustScore() +'%');
+					displayProgress.textContent = usedQuestionArr.length +'/'+numQuestions;
+				}else{
+					alert('wrong answer');
+				}
+			break;
+			}
+		}
+	clearQuestion();
+	
+	questionTime();
+}
+
+
+
+
+
+
+startQuizButton.addEventListener('click', questionTime);
+submitButton.addEventListener('click', checkAnswer);
+
+
+
+</script>
+
+<!-- model for checked radio button feedback
+
+<body>
+
+Radio button:<input type="radio" id="myRadio" >
+
+<p>Click the "Try it" button to find out whether the radio button is checked, or not.</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myRadio").checked;
+    document.getElementById("demo").innerHTML = x;
+}
+</script>
+
+</body>
+
+-->
+
+
+
+
+</body>
+</html>
