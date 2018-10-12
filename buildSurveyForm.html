@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Survey Form</title>
+</head>
+
+<body>
+
+<h1 id="title"> Simple Survey Form
+</h1>
+
+<p id = "explanantion"> All fields marked with * are mandatory.
+	</p>
+
+
+<form id = "survey-form">
+
+<label for="name" id="name-label">* Name</label>
+<input type = "text" id = "name" placeholder = "Name" autofocus required>
+
+<label for="email" id="email-label">* Email</label>
+<input type = "email" id ='email' placeholder = "youremail@domain.com" required>
+
+<label for='skill-question' id="number-label">* Skill Testing Question</label>
+<label for='skill-question'> 5 + 3 -4 = ?</label>
+<input type = "text" id="number" min="1" max="9" width='50' placeholder = "the answer is 4"required>
+
+<label for="dropdown" id="dropdown-label">Dropdown Menu</label>
+<select id="dropdown">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+<br>
+
+
+<label id="radio-label">Gender</label><br>
+<input type="radio" name="gender" value="male"> Male<br>
+<input type="radio" name="gender" value="female"> Female<br>
+<input type="radio" name="gender" value="other"> Other<br>
+
+
+
+<label id="checkbox-label">Types of Cannabis Products Used</label><br>
+<input type="checkbox" name="flower" value="flower"> Flower<br>
+<input type="checkbox" name="oral-oils" value="oral-oils">Oral Oils<br>
+<input type="checkbox" name="vaping" value="vaping"> Vaping<br>
+<input type="checkbox" name="edibles" value="edibles"> Edibles<br>
+<input type="checkbox" name="pills" value="pills"> Tablets/Capsules<br>
+
+
+<textarea rows="4" cols="50" placeholder="Enter any additional comments or questions here">
+</textarea>
+<br>
+
+<input type =  "submit" value = "Submit">
+
+</form>
+
+
+
+
+
+
+
+
+</body>
+
+</html>
